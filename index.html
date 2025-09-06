@@ -16,8 +16,8 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #121212;
-            color: #ffffff;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: #1e293b;
             height: 100vh;
             overflow: hidden;
         }
@@ -30,22 +30,31 @@
 
         /* Header */
         .header {
-            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+            background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
             padding: 16px 24px;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid #e2e8f0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 2px 20px rgba(15, 23, 42, 0.08);
+            backdrop-filter: blur(10px);
         }
 
         .app-title {
             font-size: 24px;
             font-weight: 700;
-            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            position: relative;
+        }
+
+        .app-title::before {
+            content: '🤖';
+            margin-right: 8px;
+            background: none;
+            -webkit-text-fill-color: initial;
         }
 
         .header-controls {
@@ -54,22 +63,23 @@
         }
 
         .btn {
-            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 24px;
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(106, 17, 203, 0.4);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
         }
 
         .btn:active {
@@ -77,19 +87,21 @@
         }
 
         .btn.secondary {
-            background: linear-gradient(135deg, #4a4a4a, #6a6a6a);
+            background: linear-gradient(135deg, #64748b, #475569);
+            box-shadow: 0 4px 14px rgba(100, 116, 139, 0.3);
         }
 
         .btn.secondary:hover {
-            box-shadow: 0 8px 25px rgba(74, 74, 74, 0.4);
+            box-shadow: 0 8px 25px rgba(100, 116, 139, 0.4);
         }
 
         .btn.danger {
-            background: linear-gradient(135deg, #ff4757, #ff3742);
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            box-shadow: 0 4px 14px rgba(239, 68, 68, 0.3);
         }
 
         .btn.danger:hover {
-            box-shadow: 0 8px 25px rgba(255, 71, 87, 0.4);
+            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
         }
 
         /* Main Content */
@@ -102,10 +114,82 @@
         /* Left Sidebar */
         .left-sidebar {
             width: 20%;
-            background: linear-gradient(180deg, #1a1a1a, #0f0f0f);
-            border-right: 1px solid #333;
+            background: linear-gradient(180deg, #ffffff, #f8fafc);
+            border-right: 1px solid #e2e8f0;
             overflow-y: auto;
             padding: 20px;
+            box-shadow: inset -1px 0 0 0 rgba(15, 23, 42, 0.05);
+        }
+
+        /* Search Container */
+        .search-container {
+            margin-bottom: 24px;
+            position: sticky;
+            top: 0;
+            background: linear-gradient(180deg, #ffffff, #f8fafc);
+            z-index: 10;
+            padding-bottom: 16px;
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            z-index: 1;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 16px 12px 44px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 14px;
+            background: #ffffff;
+            color: #1e293b;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            background: #f1f5f9;
+            border: none;
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #64748b;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-tab:hover {
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        .filter-tab.active {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
         }
 
         .sidebar-section {
@@ -117,14 +201,14 @@
             align-items: center;
             justify-content: space-between;
             padding: 12px 0;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid #e2e8f0;
             margin-bottom: 16px;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
         .section-header:hover {
-            color: #6a11cb;
+            color: #6366f1;
         }
 
         .section-title {
@@ -152,20 +236,41 @@
         }
 
         .agent-card {
-            background: linear-gradient(135deg, #2a2a2a, #1f1f1f);
-            border-radius: 12px;
-            padding: 16px;
+            background: linear-gradient(135deg, #ffffff, #f8fafc);
+            border-radius: 16px;
+            padding: 18px;
             cursor: grab;
             transition: all 0.3s ease;
-            border: 1px solid #333;
+            border: 1px solid #e2e8f0;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 4px 6px rgba(15, 23, 42, 0.05);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .agent-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+        }
+
+        .agent-content {
+            flex: 1;
+            min-width: 0;
         }
 
         .agent-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(106, 17, 203, 0.2);
-            border-color: #6a11cb;
+            box-shadow: 0 12px 30px rgba(99, 102, 241, 0.15);
+            border-color: #6366f1;
         }
 
         .agent-card:active {
@@ -179,7 +284,7 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
             opacity: 0;
             transition: opacity 0.3s ease;
         }
@@ -192,19 +297,19 @@
             font-size: 14px;
             font-weight: 600;
             margin-bottom: 8px;
-            color: #ffffff;
+            color: #1e293b;
         }
 
         .agent-description {
             font-size: 12px;
-            color: #aaaaaa;
+            color: #64748b;
             line-height: 1.4;
         }
 
         /* Main Canvas */
         .main-canvas {
             width: 60%;
-            background: radial-gradient(circle at 50% 50%, #1a1a1a, #0f0f0f);
+            background: radial-gradient(circle at 50% 50%, #ffffff, #f1f5f9);
             position: relative;
             overflow: hidden;
         }
@@ -214,8 +319,8 @@
             height: 100%;
             position: relative;
             background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+                linear-gradient(rgba(15, 23, 42, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
             background-size: 20px 20px;
         }
 
@@ -225,7 +330,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             text-align: center;
-            color: #666;
+            color: #64748b;
             pointer-events: none;
             transition: opacity 0.3s ease;
         }
@@ -253,20 +358,40 @@
 
         .canvas-agent {
             position: absolute;
-            background: linear-gradient(135deg, #6a11cb, #2575fc);
-            border-radius: 12px;
-            padding: 16px;
-            min-width: 160px;
+            background: linear-gradient(135deg, #ffffff, #f8fafc);
+            border-radius: 16px;
+            padding: 20px;
+            min-width: 200px;
             cursor: move;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(106, 17, 203, 0.3);
-            border: 2px solid transparent;
+            box-shadow: 0 8px 25px rgba(15, 23, 42, 0.1);
+            border: 2px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .canvas-agent-icon {
+            font-size: 28px;
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+        }
+
+        .canvas-agent-content {
+            flex: 1;
+            min-width: 0;
         }
 
         .canvas-agent:hover {
             transform: scale(1.05);
-            box-shadow: 0 12px 35px rgba(106, 17, 203, 0.4);
-            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 12px 35px rgba(99, 102, 241, 0.2);
+            border-color: #6366f1;
         }
 
         .canvas-agent.dragging {
@@ -275,28 +400,29 @@
         }
 
         .canvas-agent-title {
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 16px;
+            font-weight: 700;
             margin-bottom: 8px;
-            color: #ffffff;
+            color: #1e293b;
         }
 
         .canvas-agent-description {
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1.3;
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.4;
         }
 
         .connection-point {
             position: absolute;
-            width: 12px;
-            height: 12px;
+            width: 14px;
+            height: 14px;
             background: #ffffff;
             border-radius: 50%;
-            border: 2px solid #6a11cb;
+            border: 3px solid #6366f1;
             cursor: crosshair;
             opacity: 0;
             transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
         }
 
         .canvas-agent:hover .connection-point {
@@ -318,15 +444,122 @@
         /* Right Sidebar */
         .right-sidebar {
             width: 20%;
-            background: linear-gradient(180deg, #1a1a1a, #0f0f0f);
-            border-left: 1px solid #333;
+            background: linear-gradient(180deg, #ffffff, #f8fafc);
+            border-left: 1px solid #e2e8f0;
             display: flex;
             flex-direction: column;
+            box-shadow: inset 1px 0 0 0 rgba(15, 23, 42, 0.05);
+        }
+
+        /* Properties Panel */
+        .properties-panel {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .properties-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+        }
+
+        .properties-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 0;
+        }
+
+        .close-properties {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #64748b;
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .close-properties:hover {
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+
+        .properties-content {
+            padding: 20px;
+        }
+
+        .property-group {
+            margin-bottom: 16px;
+        }
+
+        .property-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .property-input, .property-textarea, .property-select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #1e293b;
+            background: #ffffff;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .property-textarea {
+            min-height: 60px;
+            resize: vertical;
+        }
+
+        .property-input:focus, .property-textarea:focus, .property-select:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .property-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .property-actions .btn {
+            flex: 1;
+            padding: 10px 16px;
+            font-size: 12px;
         }
 
         .execution-header {
             padding: 20px;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid #e2e8f0;
         }
 
         .execution-title {
@@ -337,7 +570,7 @@
 
         .execution-status {
             font-size: 12px;
-            color: #aaaaaa;
+            color: #64748b;
         }
 
         .execution-logs {
@@ -351,9 +584,9 @@
             align-items: flex-start;
             gap: 12px;
             margin-bottom: 16px;
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 8px;
+            padding: 14px;
+            background: rgba(15, 23, 42, 0.03);
+            border-radius: 12px;
             border-left: 3px solid transparent;
             animation: slideIn 0.3s ease;
         }
@@ -416,27 +649,27 @@
 
         .log-message {
             font-size: 13px;
-            color: #ffffff;
+            color: #1e293b;
             margin-bottom: 4px;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .log-timestamp {
             font-size: 11px;
-            color: #888888;
+            color: #64748b;
         }
 
         .log-details {
             font-size: 12px;
-            color: #cccccc;
+            color: #475569;
             margin-top: 4px;
             line-height: 1.4;
         }
 
         /* Drag and Drop States */
         .canvas-area.drag-over {
-            background-color: rgba(106, 17, 203, 0.1);
-            border: 2px dashed #6a11cb;
+            background-color: rgba(99, 102, 241, 0.05);
+            border: 2px dashed #6366f1;
         }
 
         .agent-card.dragging {
@@ -480,22 +713,156 @@
             }
         }
 
+        /* Floating Action Button */
+        .floating-actions {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 1000;
+        }
+
+        .fab {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fab:hover {
+            transform: translateY(-2px) scale(1.1);
+            box-shadow: 0 12px 35px rgba(99, 102, 241, 0.4);
+        }
+
+        .fab.secondary {
+            background: linear-gradient(135deg, #64748b, #475569);
+            box-shadow: 0 8px 25px rgba(100, 116, 139, 0.3);
+        }
+
+        .fab.secondary:hover {
+            box-shadow: 0 12px 35px rgba(100, 116, 139, 0.4);
+        }
+
+        /* Enhanced Animations */
+        .bounce-in {
+            animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .glow {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+            }
+            to {
+                box-shadow: 0 0 30px rgba(99, 102, 241, 0.6);
+            }
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: absolute;
+            background: #1e293b;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .tooltip::before {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border: 5px solid transparent;
+            border-top-color: #1e293b;
+        }
+
+        .tooltip.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Enhanced Canvas Effects */
+        .canvas-area::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.03) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
         /* Scrollbar Styling */
         ::-webkit-scrollbar {
-            width: 6px;
+            width: 8px;
         }
 
         ::-webkit-scrollbar-track {
-            background: #1a1a1a;
+            background: #f1f5f9;
+            border-radius: 4px;
         }
 
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #6a11cb, #2575fc);
-            border-radius: 3px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 4px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, #7c1dd1, #3d85fc);
+            background: linear-gradient(135deg, #5b21b6, #7c3aed);
         }
     </style>
 </head>
@@ -515,6 +882,24 @@
         <div class="main-content">
             <!-- Left Sidebar -->
             <aside class="left-sidebar">
+                <!-- Search Bar -->
+                <div class="search-container">
+                    <div class="search-box">
+                        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                        <input type="text" id="agentSearch" placeholder="Search agents..." class="search-input">
+                    </div>
+                    <div class="filter-tabs">
+                        <button class="filter-tab active" data-filter="all">All</button>
+                        <button class="filter-tab" data-filter="data-processing">Data</button>
+                        <button class="filter-tab" data-filter="machine-learning">ML</button>
+                        <button class="filter-tab" data-filter="automation">Auto</button>
+                        <button class="filter-tab" data-filter="analysis">Analysis</button>
+                    </div>
+                </div>
+
                 <div class="sidebar-section">
                     <div class="section-header" data-section="data-processing">
                         <span class="section-title">Data Processing</span>
@@ -522,16 +907,25 @@
                     </div>
                     <div class="agent-list" data-section="data-processing">
                         <div class="agent-card" draggable="true" data-agent-type="data-collector">
-                            <div class="agent-title">Data Collector</div>
-                            <div class="agent-description">Gathers and preprocesses data from various sources</div>
+                            <div class="agent-icon">📊</div>
+                            <div class="agent-content">
+                                <div class="agent-title">Data Collector</div>
+                                <div class="agent-description">Gathers and preprocesses data from various sources</div>
+                            </div>
                         </div>
                         <div class="agent-card" draggable="true" data-agent-type="data-transformer">
-                            <div class="agent-title">Data Transformer</div>
-                            <div class="agent-description">Transforms and normalizes data formats</div>
+                            <div class="agent-icon">🔄</div>
+                            <div class="agent-content">
+                                <div class="agent-title">Data Transformer</div>
+                                <div class="agent-description">Transforms and normalizes data formats</div>
+                            </div>
                         </div>
                         <div class="agent-card" draggable="true" data-agent-type="data-validator">
-                            <div class="agent-title">Data Validator</div>
-                            <div class="agent-description">Validates data quality and integrity</div>
+                            <div class="agent-icon">✅</div>
+                            <div class="agent-content">
+                                <div class="agent-title">Data Validator</div>
+                                <div class="agent-description">Validates data quality and integrity</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -543,16 +937,25 @@
                     </div>
                     <div class="agent-list" data-section="machine-learning">
                         <div class="agent-card" draggable="true" data-agent-type="model-trainer">
-                            <div class="agent-title">Model Trainer</div>
-                            <div class="agent-description">Trains ML models with provided datasets</div>
+                            <div class="agent-icon">🧠</div>
+                            <div class="agent-content">
+                                <div class="agent-title">Model Trainer</div>
+                                <div class="agent-description">Trains ML models with provided datasets</div>
+                            </div>
                         </div>
                         <div class="agent-card" draggable="true" data-agent-type="predictor">
-                            <div class="agent-title">Predictor</div>
-                            <div class="agent-description">Makes predictions using trained models</div>
+                            <div class="agent-icon">🔮</div>
+                            <div class="agent-content">
+                                <div class="agent-title">Predictor</div>
+                                <div class="agent-description">Makes predictions using trained models</div>
+                            </div>
                         </div>
                         <div class="agent-card" draggable="true" data-agent-type="evaluator">
-                            <div class="agent-title">Model Evaluator</div>
-                            <div class="agent-description">Evaluates model performance and accuracy</div>
+                            <div class="agent-icon">📈</div>
+                            <div class="agent-content">
+                                <div class="agent-title">Model Evaluator</div>
+                                <div class="agent-description">Evaluates model performance and accuracy</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -564,16 +967,25 @@
                     </div>
                     <div class="agent-list" data-section="automation">
                         <div class="agent-card" draggable="true" data-agent-type="scheduler">
-                            <div class="agent-title">Task Scheduler</div>
-                            <div class="agent-description">Schedules and manages automated tasks</div>
+                            <div class="agent-icon">⏰</div>
+                            <div class="agent-content">
+                                <div class="agent-title">Task Scheduler</div>
+                                <div class="agent-description">Schedules and manages automated tasks</div>
+                            </div>
                         </div>
                         <div class="agent-card" draggable="true" data-agent-type="notifier">
-                            <div class="agent-title">Notifier</div>
-                            <div class="agent-description">Sends notifications and alerts</div>
+                            <div class="agent-icon">🔔</div>
+                            <div class="agent-content">
+                                <div class="agent-title">Notifier</div>
+                                <div class="agent-description">Sends notifications and alerts</div>
+                            </div>
                         </div>
                         <div class="agent-card" draggable="true" data-agent-type="monitor">
-                            <div class="agent-title">System Monitor</div>
-                            <div class="agent-description">Monitors system health and performance</div>
+                            <div class="agent-icon">👁️</div>
+                            <div class="agent-content">
+                                <div class="agent-title">System Monitor</div>
+                                <div class="agent-description">Monitors system health and performance</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -585,16 +997,25 @@
                     </div>
                     <div class="agent-list" data-section="analysis">
                         <div class="agent-card" draggable="true" data-agent-type="analyzer">
-                            <div class="agent-title">Data Analyzer</div>
-                            <div class="agent-description">Performs statistical analysis on datasets</div>
+                            <div class="agent-icon">🔬</div>
+                            <div class="agent-content">
+                                <div class="agent-title">Data Analyzer</div>
+                                <div class="agent-description">Performs statistical analysis on datasets</div>
+                            </div>
                         </div>
                         <div class="agent-card" draggable="true" data-agent-type="visualizer">
-                            <div class="agent-title">Visualizer</div>
-                            <div class="agent-description">Creates charts and visual representations</div>
+                            <div class="agent-icon">📊</div>
+                            <div class="agent-content">
+                                <div class="agent-title">Visualizer</div>
+                                <div class="agent-description">Creates charts and visual representations</div>
+                            </div>
                         </div>
                         <div class="agent-card" draggable="true" data-agent-type="reporter">
-                            <div class="agent-title">Report Generator</div>
-                            <div class="agent-description">Generates comprehensive reports</div>
+                            <div class="agent-icon">📄</div>
+                            <div class="agent-content">
+                                <div class="agent-title">Report Generator</div>
+                                <div class="agent-description">Generates comprehensive reports</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -613,6 +1034,36 @@
 
             <!-- Right Sidebar -->
             <aside class="right-sidebar">
+                <!-- Properties Panel -->
+                <div class="properties-panel" id="propertiesPanel" style="display: none;">
+                    <div class="properties-header">
+                        <h3 class="properties-title">Agent Properties</h3>
+                        <button class="close-properties" id="closeProperties">×</button>
+                    </div>
+                    <div class="properties-content">
+                        <div class="property-group">
+                            <label class="property-label">Agent Name</label>
+                            <input type="text" class="property-input" id="agentName" placeholder="Enter agent name">
+                        </div>
+                        <div class="property-group">
+                            <label class="property-label">Description</label>
+                            <textarea class="property-textarea" id="agentDescription" placeholder="Enter description"></textarea>
+                        </div>
+                        <div class="property-group">
+                            <label class="property-label">Configuration</label>
+                            <select class="property-select" id="agentConfig">
+                                <option value="default">Default</option>
+                                <option value="advanced">Advanced</option>
+                                <option value="custom">Custom</option>
+                            </select>
+                        </div>
+                        <div class="property-actions">
+                            <button class="btn" id="saveProperties">Save Changes</button>
+                            <button class="btn secondary" id="deleteAgent">Delete Agent</button>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="execution-header">
                     <div class="execution-title">Execution Flow</div>
                     <div class="execution-status" id="executionStatus">Ready to execute</div>
@@ -627,6 +1078,13 @@
                     </div>
                 </div>
             </aside>
+        </div>
+        
+        <!-- Floating Action Buttons -->
+        <div class="floating-actions">
+            <button class="fab secondary" id="fabZoomFit" title="Fit to Screen">⌘</button>
+            <button class="fab secondary" id="fabCenter" title="Center Canvas">⊙</button>
+            <button class="fab" id="fabAdd" title="Add Template">+</button>
         </div>
     </div>
 
@@ -646,6 +1104,8 @@
                 this.setupEventListeners();
                 this.setupDragAndDrop();
                 this.setupSectionCollapse();
+                this.setupSearch();
+                this.setupPropertiesPanel();
             }
 
             setupEventListeners() {
@@ -653,6 +1113,11 @@
                 document.getElementById('runWorkflow').addEventListener('click', () => this.executeWorkflow());
                 document.getElementById('clearCanvas').addEventListener('click', () => this.clearCanvas());
                 document.getElementById('saveWorkflow').addEventListener('click', () => this.saveWorkflow());
+                
+                // Floating action buttons
+                document.getElementById('fabAdd').addEventListener('click', () => this.showTemplateSelector());
+                document.getElementById('fabCenter').addEventListener('click', () => this.centerCanvas());
+                document.getElementById('fabZoomFit').addEventListener('click', () => this.fitToScreen());
             }
 
             setupSectionCollapse() {
@@ -674,6 +1139,144 @@
                 });
             }
 
+            setupSearch() {
+                const searchInput = document.getElementById('agentSearch');
+                const filterTabs = document.querySelectorAll('.filter-tab');
+                
+                // Search functionality
+                searchInput.addEventListener('input', (e) => {
+                    this.filterAgents(e.target.value, this.getCurrentFilter());
+                });
+                
+                // Filter tabs
+                filterTabs.forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        // Update active tab
+                        filterTabs.forEach(t => t.classList.remove('active'));
+                        tab.classList.add('active');
+                        
+                        // Filter agents
+                        this.filterAgents(searchInput.value, tab.dataset.filter);
+                    });
+                });
+            }
+
+            getCurrentFilter() {
+                const activeTab = document.querySelector('.filter-tab.active');
+                return activeTab ? activeTab.dataset.filter : 'all';
+            }
+
+            filterAgents(searchTerm, category) {
+                const sections = document.querySelectorAll('.sidebar-section');
+                
+                sections.forEach(section => {
+                    const sectionHeader = section.querySelector('.section-header');
+                    const sectionName = sectionHeader.getAttribute('data-section');
+                    const agentCards = section.querySelectorAll('.agent-card');
+                    let visibleCount = 0;
+                    
+                    // Show/hide section based on category filter
+                    const shouldShowSection = category === 'all' || category === sectionName;
+                    
+                    if (!shouldShowSection) {
+                        section.style.display = 'none';
+                        return;
+                    }
+                    
+                    section.style.display = 'block';
+                    
+                    // Filter agents within section
+                    agentCards.forEach(card => {
+                        const title = card.querySelector('.agent-title').textContent.toLowerCase();
+                        const description = card.querySelector('.agent-description').textContent.toLowerCase();
+                        const matchesSearch = !searchTerm || 
+                            title.includes(searchTerm.toLowerCase()) || 
+                            description.includes(searchTerm.toLowerCase());
+                        
+                        if (matchesSearch) {
+                            card.style.display = 'flex';
+                            visibleCount++;
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                    
+                    // Hide section if no visible agents
+                    if (visibleCount === 0) {
+                        section.style.display = 'none';
+                    }
+                });
+            }
+
+            setupPropertiesPanel() {
+                const closeBtn = document.getElementById('closeProperties');
+                const saveBtn = document.getElementById('saveProperties');
+                const deleteBtn = document.getElementById('deleteAgent');
+                
+                closeBtn.addEventListener('click', () => this.hidePropertiesPanel());
+                saveBtn.addEventListener('click', () => this.saveAgentProperties());
+                deleteBtn.addEventListener('click', () => this.deleteSelectedAgent());
+            }
+
+            showPropertiesPanel(agent) {
+                const panel = document.getElementById('propertiesPanel');
+                const nameInput = document.getElementById('agentName');
+                const descInput = document.getElementById('agentDescription');
+                const configSelect = document.getElementById('agentConfig');
+                
+                this.selectedAgent = agent;
+                nameInput.value = agent.title;
+                descInput.value = agent.description;
+                configSelect.value = agent.config || 'default';
+                
+                panel.style.display = 'block';
+            }
+
+            hidePropertiesPanel() {
+                const panel = document.getElementById('propertiesPanel');
+                panel.style.display = 'none';
+                this.selectedAgent = null;
+            }
+
+            saveAgentProperties() {
+                if (!this.selectedAgent) return;
+                
+                const nameInput = document.getElementById('agentName');
+                const descInput = document.getElementById('agentDescription');
+                const configSelect = document.getElementById('agentConfig');
+                
+                this.selectedAgent.title = nameInput.value;
+                this.selectedAgent.description = descInput.value;
+                this.selectedAgent.config = configSelect.value;
+                
+                // Update canvas agent display
+                const titleElement = this.selectedAgent.element.querySelector('.canvas-agent-title');
+                const descElement = this.selectedAgent.element.querySelector('.canvas-agent-description');
+                
+                if (titleElement) titleElement.textContent = this.selectedAgent.title;
+                if (descElement) descElement.textContent = this.selectedAgent.description;
+                
+                this.addLogEntry('success', 'Agent properties updated', `Updated ${this.selectedAgent.title}`);
+                this.hidePropertiesPanel();
+            }
+
+            deleteSelectedAgent() {
+                if (!this.selectedAgent) return;
+                
+                // Remove from canvas
+                this.selectedAgent.element.remove();
+                
+                // Remove from array
+                const index = this.canvasAgents.indexOf(this.selectedAgent);
+                if (index > -1) {
+                    this.canvasAgents.splice(index, 1);
+                }
+                
+                this.addLogEntry('success', 'Agent deleted', `Removed ${this.selectedAgent.title}`);
+                this.hidePropertiesPanel();
+                this.updatePlaceholderVisibility();
+            }
+
             setupDragAndDrop() {
                 const agentCards = document.querySelectorAll('.agent-card');
                 const canvasArea = document.getElementById('canvasArea');
@@ -692,21 +1295,27 @@
             }
 
             handleDragStart(e) {
-                const agentType = e.target.getAttribute('data-agent-type');
-                const agentTitle = e.target.querySelector('.agent-title').textContent;
-                const agentDescription = e.target.querySelector('.agent-description').textContent;
+                const agentCard = e.target.closest('.agent-card');
+                const agentType = agentCard.getAttribute('data-agent-type');
+                const agentTitle = agentCard.querySelector('.agent-title').textContent;
+                const agentDescription = agentCard.querySelector('.agent-description').textContent;
+                const agentIcon = agentCard.querySelector('.agent-icon').textContent;
                 
                 e.dataTransfer.setData('text/plain', JSON.stringify({
                     type: agentType,
                     title: agentTitle,
-                    description: agentDescription
+                    description: agentDescription,
+                    icon: agentIcon
                 }));
                 
-                e.target.classList.add('dragging');
+                agentCard.classList.add('dragging');
             }
 
             handleDragEnd(e) {
-                e.target.classList.remove('dragging');
+                const agentCard = e.target.closest('.agent-card');
+                if (agentCard) {
+                    agentCard.classList.remove('dragging');
+                }
             }
 
             handleDragOver(e) {
@@ -748,8 +1357,11 @@
                 
                 agentElement.innerHTML = `
                     <div class="connection-point input"></div>
-                    <div class="canvas-agent-title">${agentData.title}</div>
-                    <div class="canvas-agent-description">${agentData.description}</div>
+                    <div class="canvas-agent-icon">${agentData.icon}</div>
+                    <div class="canvas-agent-content">
+                        <div class="canvas-agent-title">${agentData.title}</div>
+                        <div class="canvas-agent-description">${agentData.description}</div>
+                    </div>
                     <div class="connection-point output"></div>
                 `;
 
@@ -757,18 +1369,26 @@
                 this.makeCanvasAgentDraggable(agentElement);
                 
                 document.getElementById('canvasArea').appendChild(agentElement);
-                this.canvasAgents.push({
+                
+                const agentObject = {
                     id: agentId,
                     type: agentData.type,
                     title: agentData.title,
                     description: agentData.description,
+                    icon: agentData.icon,
                     element: agentElement
-                });
+                };
+                
+                this.canvasAgents.push(agentObject);
+                
+                // Add double-click handler
+                agentElement.addEventListener('dblclick', () => this.showPropertiesPanel(agentObject));
 
                 // Add entrance animation
+                agentElement.classList.add('bounce-in');
                 setTimeout(() => {
-                    agentElement.style.transform = 'scale(1)';
-                }, 10);
+                    agentElement.classList.remove('bounce-in');
+                }, 600);
             }
 
             makeCanvasAgentDraggable(element) {
@@ -824,6 +1444,11 @@
 
                 if (this.canvasAgents.length === 0) {
                     this.addLogEntry('error', 'No agents in workflow', 'Add agents to the canvas before executing');
+                    // Shake the canvas to indicate error
+                    document.getElementById('canvasArea').classList.add('shake');
+                    setTimeout(() => {
+                        document.getElementById('canvasArea').classList.remove('shake');
+                    }, 500);
                     return;
                 }
 
@@ -950,6 +1575,136 @@
                 localStorage.setItem('aiWorkflow', JSON.stringify(workflowData));
                 
                 this.addLogEntry('success', 'Workflow saved', `Saved ${this.canvasAgents.length} agents to local storage`);
+            }
+
+            showTemplateSelector() {
+                const templates = [
+                    {
+                        name: "Data Processing Pipeline",
+                        agents: [
+                            { type: "data-collector", x: 100, y: 100 },
+                            { type: "data-transformer", x: 350, y: 100 },
+                            { type: "data-validator", x: 600, y: 100 }
+                        ]
+                    },
+                    {
+                        name: "ML Training Workflow",
+                        agents: [
+                            { type: "data-collector", x: 100, y: 150 },
+                            { type: "model-trainer", x: 350, y: 150 },
+                            { type: "evaluator", x: 600, y: 150 }
+                        ]
+                    },
+                    {
+                        name: "Automated Analysis",
+                        agents: [
+                            { type: "analyzer", x: 150, y: 100 },
+                            { type: "visualizer", x: 400, y: 100 },
+                            { type: "reporter", x: 650, y: 100 },
+                            { type: "notifier", x: 400, y: 250 }
+                        ]
+                    }
+                ];
+                
+                // Simple template selection (in a real app, this would be a modal)
+                const selectedTemplate = templates[Math.floor(Math.random() * templates.length)];
+                this.loadTemplate(selectedTemplate);
+            }
+
+            loadTemplate(template) {
+                // Clear existing agents
+                this.clearCanvas();
+                
+                // Add agents from template
+                template.agents.forEach((agentConfig, index) => {
+                    setTimeout(() => {
+                        const agentTypes = {
+                            "data-collector": { title: "Data Collector", description: "Gathers and preprocesses data from various sources", icon: "📊" },
+                            "data-transformer": { title: "Data Transformer", description: "Transforms and normalizes data formats", icon: "🔄" },
+                            "data-validator": { title: "Data Validator", description: "Validates data quality and integrity", icon: "✅" },
+                            "model-trainer": { title: "Model Trainer", description: "Trains ML models with provided datasets", icon: "🧠" },
+                            "evaluator": { title: "Model Evaluator", description: "Evaluates model performance and accuracy", icon: "📈" },
+                            "analyzer": { title: "Data Analyzer", description: "Performs statistical analysis on datasets", icon: "🔬" },
+                            "visualizer": { title: "Visualizer", description: "Creates charts and visual representations", icon: "📊" },
+                            "reporter": { title: "Report Generator", description: "Generates comprehensive reports", icon: "📄" },
+                            "notifier": { title: "Notifier", description: "Sends notifications and alerts", icon: "🔔" }
+                        };
+                        
+                        const agentData = agentTypes[agentConfig.type];
+                        if (agentData) {
+                            agentData.type = agentConfig.type;
+                            this.createCanvasAgent(agentData, agentConfig.x, agentConfig.y);
+                        }
+                    }, index * 200); // Stagger the animations
+                });
+                
+                this.addLogEntry('success', `Template loaded: ${template.name}`, `Added ${template.agents.length} agents`);
+            }
+
+            centerCanvas() {
+                if (this.canvasAgents.length === 0) {
+                    this.addLogEntry('warning', 'No agents to center', 'Add some agents first');
+                    return;
+                }
+                
+                const canvasArea = document.getElementById('canvasArea');
+                const canvasRect = canvasArea.getBoundingClientRect();
+                const centerX = canvasRect.width / 2;
+                const centerY = canvasRect.height / 2;
+                
+                // Calculate bounding box of all agents
+                let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+                
+                this.canvasAgents.forEach(agent => {
+                    const x = parseInt(agent.element.style.left);
+                    const y = parseInt(agent.element.style.top);
+                    const width = agent.element.offsetWidth;
+                    const height = agent.element.offsetHeight;
+                    
+                    minX = Math.min(minX, x);
+                    maxX = Math.max(maxX, x + width);
+                    minY = Math.min(minY, y);
+                    maxY = Math.max(maxY, y + height);
+                });
+                
+                // Calculate offset to center the group
+                const groupCenterX = (minX + maxX) / 2;
+                const groupCenterY = (minY + maxY) / 2;
+                const offsetX = centerX - groupCenterX;
+                const offsetY = centerY - groupCenterY;
+                
+                // Apply offset to all agents with animation
+                this.canvasAgents.forEach(agent => {
+                    const currentX = parseInt(agent.element.style.left);
+                    const currentY = parseInt(agent.element.style.top);
+                    
+                    agent.element.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                    agent.element.style.left = `${currentX + offsetX}px`;
+                    agent.element.style.top = `${currentY + offsetY}px`;
+                    
+                    setTimeout(() => {
+                        agent.element.style.transition = '';
+                    }, 800);
+                });
+                
+                this.addLogEntry('success', 'Canvas centered', 'All agents moved to center');
+            }
+
+            fitToScreen() {
+                if (this.canvasAgents.length === 0) {
+                    this.addLogEntry('warning', 'No agents to fit', 'Add some agents first');
+                    return;
+                }
+                
+                // Add a subtle glow effect to all agents
+                this.canvasAgents.forEach(agent => {
+                    agent.element.classList.add('glow');
+                    setTimeout(() => {
+                        agent.element.classList.remove('glow');
+                    }, 2000);
+                });
+                
+                this.addLogEntry('success', 'Fit to screen', 'Highlighting all agents');
             }
 
             delay(ms) {
