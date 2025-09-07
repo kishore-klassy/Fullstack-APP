@@ -217,6 +217,51 @@
                 linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
             background-size: 20px 20px;
+            overflow: hidden;
+        }
+
+        .connections-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .connection-line {
+            stroke: #6a11cb;
+            stroke-width: 2;
+            fill: none;
+            filter: drop-shadow(0 0 4px rgba(106, 17, 203, 0.3));
+            transition: all 0.3s ease;
+        }
+
+        .connection-line:hover {
+            stroke: #2575fc;
+            stroke-width: 3;
+            filter: drop-shadow(0 0 8px rgba(37, 117, 252, 0.5));
+        }
+
+        .connection-line.active {
+            stroke: #10b981;
+            stroke-width: 3;
+            filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.5));
+        }
+
+        .connection-line.error {
+            stroke: #ef4444;
+            stroke-width: 3;
+            filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.5));
+        }
+
+        .temp-connection {
+            stroke: #6a11cb;
+            stroke-width: 2;
+            fill: none;
+            stroke-dasharray: 5,5;
+            opacity: 0.7;
         }
 
         .canvas-placeholder {
@@ -297,10 +342,19 @@
             cursor: crosshair;
             opacity: 0;
             transition: all 0.3s ease;
+            z-index: 10;
+            pointer-events: auto;
         }
 
-        .canvas-agent:hover .connection-point {
+        .canvas-agent:hover .connection-point,
+        .connection-point.active {
             opacity: 1;
+        }
+
+        .connection-point:hover {
+            transform: translateY(-50%) scale(1.2);
+            background: #6a11cb;
+            box-shadow: 0 0 10px rgba(106, 17, 203, 0.5);
         }
 
         .connection-point.input {
@@ -313,6 +367,21 @@
             right: -6px;
             top: 50%;
             transform: translateY(-50%);
+        }
+
+        .connection-point.input:hover {
+            transform: translateY(-50%) scale(1.2);
+        }
+
+        .connection-point.output:hover {
+            transform: translateY(-50%) scale(1.2);
+        }
+
+        .connection-point.connecting {
+            opacity: 1;
+            background: #f59e0b;
+            border-color: #f59e0b;
+            animation: pulse 1s infinite;
         }
 
         /* Right Sidebar */
@@ -480,6 +549,131 @@
             }
         }
 
+        /* Help Modal */
+        .help-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .help-modal.show {
+            display: flex;
+        }
+
+        .help-content {
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid #333;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .help-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #333;
+        }
+
+        .help-title {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .help-close {
+            background: none;
+            border: none;
+            color: #aaa;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .help-close:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .help-section {
+            margin-bottom: 24px;
+        }
+
+        .help-section h3 {
+            color: #6a11cb;
+            font-size: 18px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .help-section p {
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .help-section ul {
+            color: #ccc;
+            margin-left: 20px;
+            line-height: 1.6;
+        }
+
+        .help-section li {
+            margin-bottom: 4px;
+        }
+
+        .keyboard-shortcut {
+            display: inline-block;
+            background: #333;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            margin: 0 2px;
+        }
+
+        /* Status indicators */
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-indicator.connected {
+            background: #10b981;
+            box-shadow: 0 0 6px rgba(16, 185, 129, 0.5);
+        }
+
+        .status-indicator.disconnected {
+            background: #ef4444;
+            box-shadow: 0 0 6px rgba(239, 68, 68, 0.5);
+        }
+
+        .status-indicator.executing {
+            background: #f59e0b;
+            box-shadow: 0 0 6px rgba(245, 158, 11, 0.5);
+            animation: pulse 2s infinite;
+        }
+
         /* Scrollbar Styling */
         ::-webkit-scrollbar {
             width: 6px;
@@ -505,9 +699,12 @@
         <header class="header">
             <h1 class="app-title">AI Workflow Builder</h1>
             <div class="header-controls">
-                <button class="btn" id="runWorkflow">Run Workflow</button>
-                <button class="btn secondary" id="saveWorkflow">Save Workflow</button>
-                <button class="btn danger" id="clearCanvas">Clear Canvas</button>
+                <button class="btn" id="runWorkflow">▶ Run Workflow</button>
+                <button class="btn secondary" id="validateWorkflow">✓ Validate</button>
+                <button class="btn secondary" id="saveWorkflow">💾 Save</button>
+                <button class="btn secondary" id="loadWorkflow">📂 Load</button>
+                <button class="btn secondary" id="helpButton">❓ Help</button>
+                <button class="btn danger" id="clearCanvas">🗑 Clear</button>
             </div>
         </header>
 
@@ -598,11 +795,61 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="sidebar-section">
+                    <div class="section-header" data-section="communication">
+                        <span class="section-title">Communication</span>
+                        <span class="collapse-icon">▼</span>
+                    </div>
+                    <div class="agent-list" data-section="communication">
+                        <div class="agent-card" draggable="true" data-agent-type="email-sender">
+                            <div class="agent-title">Email Sender</div>
+                            <div class="agent-description">Sends automated email notifications</div>
+                        </div>
+                        <div class="agent-card" draggable="true" data-agent-type="slack-bot">
+                            <div class="agent-title">Slack Bot</div>
+                            <div class="agent-description">Posts messages to Slack channels</div>
+                        </div>
+                        <div class="agent-card" draggable="true" data-agent-type="webhook">
+                            <div class="agent-title">Webhook</div>
+                            <div class="agent-description">Sends HTTP requests to external APIs</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="section-header" data-section="triggers">
+                        <span class="section-title">Triggers</span>
+                        <span class="collapse-icon">▼</span>
+                    </div>
+                    <div class="agent-list" data-section="triggers">
+                        <div class="agent-card" draggable="true" data-agent-type="timer-trigger">
+                            <div class="agent-title">Timer Trigger</div>
+                            <div class="agent-description">Triggers workflow at scheduled times</div>
+                        </div>
+                        <div class="agent-card" draggable="true" data-agent-type="file-watcher">
+                            <div class="agent-title">File Watcher</div>
+                            <div class="agent-description">Monitors file system changes</div>
+                        </div>
+                        <div class="agent-card" draggable="true" data-agent-type="api-trigger">
+                            <div class="agent-title">API Trigger</div>
+                            <div class="agent-description">Starts workflow via API endpoint</div>
+                        </div>
+                    </div>
+                </div>
             </aside>
 
             <!-- Main Canvas -->
             <main class="main-canvas">
                 <div class="canvas-area" id="canvasArea">
+                    <svg class="connections-svg" id="connectionsSvg">
+                        <defs>
+                            <marker id="arrowhead" markerWidth="10" markerHeight="7" 
+                                    refX="9" refY="3.5" orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#6a11cb" />
+                            </marker>
+                        </defs>
+                    </svg>
                     <div class="canvas-placeholder" id="canvasPlaceholder">
                         <div class="placeholder-icon">🤖</div>
                         <div class="placeholder-text">Build Your AI Workflow</div>
@@ -630,14 +877,89 @@
         </div>
     </div>
 
+    <!-- Help Modal -->
+    <div class="help-modal" id="helpModal">
+        <div class="help-content">
+            <div class="help-header">
+                <h2 class="help-title">AI Workflow Builder - Help</h2>
+                <button class="help-close" id="helpClose">×</button>
+            </div>
+            
+            <div class="help-section">
+                <h3>Getting Started</h3>
+                <p>Build powerful AI workflows by connecting agents together, just like n8n!</p>
+                <ul>
+                    <li>Drag agents from the left sidebar to the canvas</li>
+                    <li>Click and drag from output points (right side) to input points (left side) to create connections</li>
+                    <li>Click agents to select them, then use Delete to remove them</li>
+                    <li>Shift+Click on connections to delete them</li>
+                </ul>
+            </div>
+
+            <div class="help-section">
+                <h3>Agent Types</h3>
+                <p>Choose from various agent categories:</p>
+                <ul>
+                    <li><strong>Data Processing:</strong> Collect, transform, and validate data</li>
+                    <li><strong>Machine Learning:</strong> Train models, make predictions, evaluate performance</li>
+                    <li><strong>Automation:</strong> Schedule tasks, send notifications, monitor systems</li>
+                    <li><strong>Analysis:</strong> Analyze data, create visualizations, generate reports</li>
+                    <li><strong>Communication:</strong> Send emails, post to Slack, call webhooks</li>
+                    <li><strong>Triggers:</strong> Start workflows with timers, file watchers, or API calls</li>
+                </ul>
+            </div>
+
+            <div class="help-section">
+                <h3>Workflow Execution</h3>
+                <p>The system automatically determines execution order based on connections:</p>
+                <ul>
+                    <li>Agents execute in topological order (dependencies first)</li>
+                    <li>Validation checks for circular dependencies and disconnected agents</li>
+                    <li>Real-time visual feedback during execution</li>
+                    <li>Detailed execution logs in the right panel</li>
+                </ul>
+            </div>
+
+            <div class="help-section">
+                <h3>Keyboard Shortcuts</h3>
+                <ul>
+                    <li><span class="keyboard-shortcut">Ctrl+S</span> Save workflow</li>
+                    <li><span class="keyboard-shortcut">Ctrl+O</span> Load workflow</li>
+                    <li><span class="keyboard-shortcut">Ctrl+R</span> Run workflow</li>
+                    <li><span class="keyboard-shortcut">Delete</span> Delete selected agent</li>
+                    <li><span class="keyboard-shortcut">Escape</span> Cancel connection or deselect</li>
+                    <li><span class="keyboard-shortcut">Shift+Click</span> Delete connection</li>
+                </ul>
+            </div>
+
+            <div class="help-section">
+                <h3>Tips & Tricks</h3>
+                <ul>
+                    <li>Use trigger agents (Timer, File Watcher, API) to start workflows</li>
+                    <li>Validate your workflow before running to catch issues</li>
+                    <li>Save frequently to preserve your work</li>
+                    <li>Connection lines show data flow direction with arrows</li>
+                    <li>Agents glow when selected or during execution</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
     <script>
         class AIWorkflowBuilder {
             constructor() {
                 this.canvasAgents = [];
+                this.connections = [];
                 this.draggedAgent = null;
                 this.dragOffset = { x: 0, y: 0 };
                 this.executionId = 0;
                 this.isExecuting = false;
+                this.isConnecting = false;
+                this.connectionStart = null;
+                this.tempConnection = null;
+                this.selectedAgent = null;
+                this.zoom = 1;
+                this.pan = { x: 0, y: 0 };
                 
                 this.init();
             }
@@ -646,6 +968,8 @@
                 this.setupEventListeners();
                 this.setupDragAndDrop();
                 this.setupSectionCollapse();
+                this.setupKeyboardShortcuts();
+                this.setupCanvasInteractions();
             }
 
             setupEventListeners() {
@@ -653,6 +977,67 @@
                 document.getElementById('runWorkflow').addEventListener('click', () => this.executeWorkflow());
                 document.getElementById('clearCanvas').addEventListener('click', () => this.clearCanvas());
                 document.getElementById('saveWorkflow').addEventListener('click', () => this.saveWorkflow());
+                document.getElementById('loadWorkflow').addEventListener('click', () => this.loadWorkflow());
+                document.getElementById('validateWorkflow').addEventListener('click', () => this.validateWorkflow());
+                document.getElementById('helpButton').addEventListener('click', () => this.showHelp());
+                
+                // Help modal events
+                document.getElementById('helpClose').addEventListener('click', () => this.hideHelp());
+                document.getElementById('helpModal').addEventListener('click', (e) => {
+                    if (e.target === document.getElementById('helpModal')) {
+                        this.hideHelp();
+                    }
+                });
+            }
+
+            setupKeyboardShortcuts() {
+                document.addEventListener('keydown', (e) => {
+                    if (e.ctrlKey || e.metaKey) {
+                        switch(e.key) {
+                            case 's':
+                                e.preventDefault();
+                                this.saveWorkflow();
+                                break;
+                            case 'o':
+                                e.preventDefault();
+                                this.loadWorkflow();
+                                break;
+                            case 'r':
+                                e.preventDefault();
+                                this.executeWorkflow();
+                                break;
+                            case 'Delete':
+                            case 'Backspace':
+                                if (this.selectedAgent) {
+                                    this.deleteAgent(this.selectedAgent);
+                                }
+                                break;
+                        }
+                    }
+                    
+                    if (e.key === 'Escape') {
+                        this.cancelConnection();
+                        this.deselectAgent();
+                    }
+                });
+            }
+
+            setupCanvasInteractions() {
+                const canvasArea = document.getElementById('canvasArea');
+                
+                // Canvas click to deselect
+                canvasArea.addEventListener('click', (e) => {
+                    if (e.target === canvasArea) {
+                        this.deselectAgent();
+                    }
+                });
+
+                // Mouse move for temporary connections
+                canvasArea.addEventListener('mousemove', (e) => {
+                    if (this.isConnecting && this.connectionStart) {
+                        this.updateTempConnection(e);
+                    }
+                });
             }
 
             setupSectionCollapse() {
@@ -715,7 +1100,9 @@
 
             handleDragEnter(e) {
                 e.preventDefault();
-                e.target.classList.add('drag-over');
+                if (e.target.classList.contains('canvas-area')) {
+                    e.target.classList.add('drag-over');
+                }
             }
 
             handleDragLeave(e) {
@@ -745,30 +1132,304 @@
                 agentElement.id = agentId;
                 agentElement.style.left = `${x - 80}px`;
                 agentElement.style.top = `${y - 40}px`;
+                agentElement.style.zIndex = '2';
                 
                 agentElement.innerHTML = `
-                    <div class="connection-point input"></div>
+                    <div class="connection-point input" data-agent-id="${agentId}" data-type="input"></div>
                     <div class="canvas-agent-title">${agentData.title}</div>
                     <div class="canvas-agent-description">${agentData.description}</div>
-                    <div class="connection-point output"></div>
+                    <div class="connection-point output" data-agent-id="${agentId}" data-type="output"></div>
                 `;
 
-                // Make canvas agent draggable
+                // Setup connection point events
+                this.setupConnectionPoints(agentElement, agentId);
+                
+                // Make canvas agent draggable and selectable
                 this.makeCanvasAgentDraggable(agentElement);
+                this.makeCanvasAgentSelectable(agentElement, agentId);
                 
                 document.getElementById('canvasArea').appendChild(agentElement);
-                this.canvasAgents.push({
+                
+                const agentObj = {
                     id: agentId,
                     type: agentData.type,
                     title: agentData.title,
                     description: agentData.description,
-                    element: agentElement
-                });
+                    element: agentElement,
+                    position: { x: x - 80, y: y - 40 },
+                    properties: this.getDefaultProperties(agentData.type)
+                };
+                
+                this.canvasAgents.push(agentObj);
 
                 // Add entrance animation
                 setTimeout(() => {
                     agentElement.style.transform = 'scale(1)';
                 }, 10);
+
+                this.addLogEntry('success', 'Agent added', `${agentData.title} added to workflow`);
+            }
+
+            getDefaultProperties(agentType) {
+                const defaults = {
+                    'data-collector': { source: 'api', interval: 60 },
+                    'data-transformer': { format: 'json', validation: true },
+                    'model-trainer': { algorithm: 'auto', epochs: 100 },
+                    'email-sender': { smtp: 'gmail', template: 'default' },
+                    'timer-trigger': { schedule: '0 * * * *', timezone: 'UTC' }
+                };
+                return defaults[agentType] || {};
+            }
+
+            setupConnectionPoints(agentElement, agentId) {
+                const connectionPoints = agentElement.querySelectorAll('.connection-point');
+                
+                connectionPoints.forEach(point => {
+                    point.addEventListener('mousedown', (e) => {
+                        e.stopPropagation();
+                        this.startConnection(point, agentId);
+                    });
+
+                    point.addEventListener('mouseup', (e) => {
+                        e.stopPropagation();
+                        if (this.isConnecting) {
+                            this.endConnection(point, agentId);
+                        }
+                    });
+
+                    point.addEventListener('mouseenter', () => {
+                        if (this.isConnecting) {
+                            point.classList.add('active');
+                        }
+                    });
+
+                    point.addEventListener('mouseleave', () => {
+                        point.classList.remove('active');
+                    });
+                });
+            }
+
+            startConnection(point, agentId) {
+                if (point.dataset.type === 'output') {
+                    this.isConnecting = true;
+                    this.connectionStart = {
+                        agentId: agentId,
+                        point: point,
+                        type: 'output'
+                    };
+                    point.classList.add('connecting');
+                    
+                    // Create temporary connection line
+                    this.createTempConnection();
+                    this.addLogEntry('progress', 'Connection started', 'Click on an input point to complete');
+                }
+            }
+
+            endConnection(point, agentId) {
+                if (this.isConnecting && this.connectionStart && point.dataset.type === 'input' && agentId !== this.connectionStart.agentId) {
+                    // Create the connection
+                    this.createConnection(this.connectionStart.agentId, agentId);
+                    this.cancelConnection();
+                    this.addLogEntry('success', 'Connection created', `Connected ${this.getAgentById(this.connectionStart.agentId).title} to ${this.getAgentById(agentId).title}`);
+                } else if (this.isConnecting) {
+                    this.cancelConnection();
+                }
+            }
+
+            createTempConnection() {
+                const svg = document.getElementById('connectionsSvg');
+                this.tempConnection = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                this.tempConnection.classList.add('temp-connection');
+                svg.appendChild(this.tempConnection);
+            }
+
+            updateTempConnection(e) {
+                if (!this.tempConnection || !this.connectionStart) return;
+
+                const canvasRect = document.getElementById('canvasArea').getBoundingClientRect();
+                const startPoint = this.getConnectionPointPosition(this.connectionStart.point);
+                const endX = e.clientX - canvasRect.left;
+                const endY = e.clientY - canvasRect.top;
+
+                const path = this.createConnectionPath(startPoint.x, startPoint.y, endX, endY);
+                this.tempConnection.setAttribute('d', path);
+            }
+
+            cancelConnection() {
+                this.isConnecting = false;
+                if (this.connectionStart) {
+                    this.connectionStart.point.classList.remove('connecting');
+                    this.connectionStart = null;
+                }
+                if (this.tempConnection) {
+                    this.tempConnection.remove();
+                    this.tempConnection = null;
+                }
+            }
+
+            createConnection(fromAgentId, toAgentId) {
+                // Check if connection already exists
+                const exists = this.connections.some(conn => 
+                    conn.from === fromAgentId && conn.to === toAgentId
+                );
+                
+                if (exists) {
+                    this.addLogEntry('warning', 'Connection exists', 'This connection already exists');
+                    return;
+                }
+
+                const connectionId = `conn_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+                const connection = {
+                    id: connectionId,
+                    from: fromAgentId,
+                    to: toAgentId
+                };
+
+                this.connections.push(connection);
+                this.renderConnection(connection);
+            }
+
+            renderConnection(connection) {
+                const fromAgent = this.getAgentById(connection.from);
+                const toAgent = this.getAgentById(connection.to);
+                
+                if (!fromAgent || !toAgent) return;
+
+                const fromPoint = fromAgent.element.querySelector('.connection-point.output');
+                const toPoint = toAgent.element.querySelector('.connection-point.input');
+
+                const fromPos = this.getConnectionPointPosition(fromPoint);
+                const toPos = this.getConnectionPointPosition(toPoint);
+
+                const svg = document.getElementById('connectionsSvg');
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                
+                path.classList.add('connection-line');
+                path.setAttribute('id', connection.id);
+                path.setAttribute('d', this.createConnectionPath(fromPos.x, fromPos.y, toPos.x, toPos.y));
+                path.setAttribute('marker-end', 'url(#arrowhead)');
+                
+                // Make connection deletable
+                path.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (e.shiftKey) {
+                        this.deleteConnection(connection.id);
+                    }
+                });
+
+                svg.appendChild(path);
+            }
+
+            createConnectionPath(x1, y1, x2, y2) {
+                const dx = x2 - x1;
+                const dy = y2 - y1;
+                const curve = Math.abs(dx) * 0.3;
+                
+                return `M ${x1} ${y1} C ${x1 + curve} ${y1}, ${x2 - curve} ${y2}, ${x2} ${y2}`;
+            }
+
+            getConnectionPointPosition(point) {
+                const rect = point.getBoundingClientRect();
+                const canvasRect = document.getElementById('canvasArea').getBoundingClientRect();
+                
+                return {
+                    x: rect.left + rect.width / 2 - canvasRect.left,
+                    y: rect.top + rect.height / 2 - canvasRect.top
+                };
+            }
+
+            updateAllConnections() {
+                this.connections.forEach(connection => {
+                    const pathElement = document.getElementById(connection.id);
+                    if (pathElement) {
+                        const fromAgent = this.getAgentById(connection.from);
+                        const toAgent = this.getAgentById(connection.to);
+                        
+                        if (fromAgent && toAgent) {
+                            const fromPoint = fromAgent.element.querySelector('.connection-point.output');
+                            const toPoint = toAgent.element.querySelector('.connection-point.input');
+                            
+                            const fromPos = this.getConnectionPointPosition(fromPoint);
+                            const toPos = this.getConnectionPointPosition(toPoint);
+                            
+                            pathElement.setAttribute('d', this.createConnectionPath(fromPos.x, fromPos.y, toPos.x, toPos.y));
+                        }
+                    }
+                });
+            }
+
+            deleteConnection(connectionId) {
+                const connection = this.connections.find(conn => conn.id === connectionId);
+                if (connection) {
+                    const fromAgent = this.getAgentById(connection.from);
+                    const toAgent = this.getAgentById(connection.to);
+                    
+                    this.connections = this.connections.filter(conn => conn.id !== connectionId);
+                    
+                    const pathElement = document.getElementById(connectionId);
+                    if (pathElement) {
+                        pathElement.remove();
+                    }
+                    
+                    this.addLogEntry('success', 'Connection deleted', `Removed connection from ${fromAgent?.title} to ${toAgent?.title}`);
+                }
+            }
+
+            makeCanvasAgentSelectable(element, agentId) {
+                element.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    this.selectAgent(agentId);
+                });
+            }
+
+            selectAgent(agentId) {
+                // Deselect previous agent
+                this.deselectAgent();
+                
+                const agent = this.getAgentById(agentId);
+                if (agent) {
+                    this.selectedAgent = agentId;
+                    agent.element.style.border = '2px solid #2575fc';
+                    agent.element.style.boxShadow = '0 0 20px rgba(37, 117, 252, 0.5)';
+                }
+            }
+
+            deselectAgent() {
+                if (this.selectedAgent) {
+                    const agent = this.getAgentById(this.selectedAgent);
+                    if (agent) {
+                        agent.element.style.border = '2px solid transparent';
+                        agent.element.style.boxShadow = '0 8px 25px rgba(106, 17, 203, 0.3)';
+                    }
+                    this.selectedAgent = null;
+                }
+            }
+
+            deleteAgent(agentId) {
+                const agent = this.getAgentById(agentId);
+                if (!agent) return;
+
+                // Remove connections
+                const connectionsToRemove = this.connections.filter(conn => 
+                    conn.from === agentId || conn.to === agentId
+                );
+                
+                connectionsToRemove.forEach(conn => {
+                    this.deleteConnection(conn.id);
+                });
+
+                // Remove agent
+                agent.element.remove();
+                this.canvasAgents = this.canvasAgents.filter(a => a.id !== agentId);
+                
+                this.selectedAgent = null;
+                this.updatePlaceholderVisibility();
+                
+                this.addLogEntry('success', 'Agent deleted', `${agent.title} removed from workflow`);
+            }
+
+            getAgentById(agentId) {
+                return this.canvasAgents.find(agent => agent.id === agentId);
             }
 
             makeCanvasAgentDraggable(element) {
@@ -776,6 +1437,8 @@
                 let startX, startY, startLeft, startTop;
 
                 element.addEventListener('mousedown', (e) => {
+                    if (e.target.classList.contains('connection-point')) return;
+                    
                     isDragging = true;
                     element.classList.add('dragging');
                     
@@ -795,14 +1458,134 @@
                     
                     element.style.left = `${startLeft + deltaX}px`;
                     element.style.top = `${startTop + deltaY}px`;
+                    
+                    // Update connections
+                    this.updateAllConnections();
                 });
 
                 document.addEventListener('mouseup', () => {
                     if (isDragging) {
                         isDragging = false;
                         element.classList.remove('dragging');
+                        
+                        // Update agent position
+                        const agentId = element.id;
+                        const agent = this.getAgentById(agentId);
+                        if (agent) {
+                            agent.position.x = parseInt(element.style.left);
+                            agent.position.y = parseInt(element.style.top);
+                        }
                     }
                 });
+            }
+
+            validateWorkflow() {
+                const issues = [];
+                
+                // Check for disconnected agents
+                const connectedAgents = new Set();
+                this.connections.forEach(conn => {
+                    connectedAgents.add(conn.from);
+                    connectedAgents.add(conn.to);
+                });
+                
+                const disconnectedAgents = this.canvasAgents.filter(agent => 
+                    !connectedAgents.has(agent.id) && this.canvasAgents.length > 1
+                );
+                
+                if (disconnectedAgents.length > 0) {
+                    issues.push(`${disconnectedAgents.length} disconnected agent(s)`);
+                }
+
+                // Check for circular dependencies
+                if (this.hasCircularDependency()) {
+                    issues.push('Circular dependency detected');
+                }
+
+                // Check for agents with no inputs (except triggers)
+                const triggerTypes = ['timer-trigger', 'file-watcher', 'api-trigger'];
+                const agentsWithoutInputs = this.canvasAgents.filter(agent => {
+                    const hasInput = this.connections.some(conn => conn.to === agent.id);
+                    return !hasInput && !triggerTypes.includes(agent.type);
+                });
+
+                if (agentsWithoutInputs.length > 0) {
+                    issues.push(`${agentsWithoutInputs.length} agent(s) without inputs`);
+                }
+
+                if (issues.length === 0) {
+                    this.addLogEntry('success', 'Validation passed', 'Workflow structure is valid');
+                } else {
+                    this.addLogEntry('warning', 'Validation issues found', issues.join(', '));
+                }
+
+                return issues.length === 0;
+            }
+
+            hasCircularDependency() {
+                const visited = new Set();
+                const recursionStack = new Set();
+
+                const dfs = (agentId) => {
+                    if (recursionStack.has(agentId)) return true;
+                    if (visited.has(agentId)) return false;
+
+                    visited.add(agentId);
+                    recursionStack.add(agentId);
+
+                    const outgoingConnections = this.connections.filter(conn => conn.from === agentId);
+                    for (const conn of outgoingConnections) {
+                        if (dfs(conn.to)) return true;
+                    }
+
+                    recursionStack.delete(agentId);
+                    return false;
+                };
+
+                for (const agent of this.canvasAgents) {
+                    if (dfs(agent.id)) return true;
+                }
+
+                return false;
+            }
+
+            getExecutionOrder() {
+                const inDegree = {};
+                const queue = [];
+                const result = [];
+
+                // Initialize in-degree count
+                this.canvasAgents.forEach(agent => {
+                    inDegree[agent.id] = 0;
+                });
+
+                // Calculate in-degrees
+                this.connections.forEach(conn => {
+                    inDegree[conn.to]++;
+                });
+
+                // Find agents with no incoming connections
+                this.canvasAgents.forEach(agent => {
+                    if (inDegree[agent.id] === 0) {
+                        queue.push(agent.id);
+                    }
+                });
+
+                // Topological sort
+                while (queue.length > 0) {
+                    const agentId = queue.shift();
+                    result.push(agentId);
+
+                    const outgoingConnections = this.connections.filter(conn => conn.from === agentId);
+                    outgoingConnections.forEach(conn => {
+                        inDegree[conn.to]--;
+                        if (inDegree[conn.to] === 0) {
+                            queue.push(conn.to);
+                        }
+                    });
+                }
+
+                return result;
             }
 
             updatePlaceholderVisibility() {
@@ -827,48 +1610,82 @@
                     return;
                 }
 
+                if (!this.validateWorkflow()) {
+                    this.addLogEntry('error', 'Workflow validation failed', 'Fix validation issues before executing');
+                    return;
+                }
+
                 this.isExecuting = true;
                 this.executionId++;
                 
                 document.getElementById('executionStatus').textContent = 'Executing workflow...';
                 
-                this.addLogEntry('progress', `Starting workflow execution #${this.executionId}`, `Processing ${this.canvasAgents.length} agents`);
+                const executionOrder = this.getExecutionOrder();
+                this.addLogEntry('progress', `Starting workflow execution #${this.executionId}`, `Processing ${executionOrder.length} agents in order`);
 
-                // Simulate execution of each agent
-                for (let i = 0; i < this.canvasAgents.length; i++) {
-                    const agent = this.canvasAgents[i];
+                // Execute agents in topological order
+                for (const agentId of executionOrder) {
+                    const agent = this.getAgentById(agentId);
+                    if (!agent) continue;
                     
-                    // Highlight current agent
+                    // Highlight current agent and connections
                     agent.element.style.border = '2px solid #f59e0b';
+                    this.highlightConnections(agentId, 'active');
                     
                     this.addLogEntry('progress', `Executing ${agent.title}`, agent.description);
                     
                     // Simulate processing time
                     await this.delay(1000 + Math.random() * 2000);
                     
-                    // Simulate success/failure (90% success rate)
-                    const success = Math.random() > 0.1;
+                    // Simulate success/failure (95% success rate for connected workflow)
+                    const success = Math.random() > 0.05;
                     
                     if (success) {
                         agent.element.style.border = '2px solid #10b981';
+                        this.highlightConnections(agentId, 'active');
                         this.addLogEntry('success', `${agent.title} completed successfully`, `Processed in ${(Math.random() * 3 + 1).toFixed(2)}s`);
                     } else {
                         agent.element.style.border = '2px solid #ef4444';
+                        this.highlightConnections(agentId, 'error');
                         this.addLogEntry('error', `${agent.title} failed`, `Error: ${this.getRandomError()}`);
+                        break; // Stop execution on error
                     }
                     
                     await this.delay(500);
-                    
-                    // Reset border
-                    setTimeout(() => {
-                        agent.element.style.border = '2px solid transparent';
-                    }, 2000);
                 }
+
+                // Reset all highlights
+                setTimeout(() => {
+                    this.canvasAgents.forEach(agent => {
+                        agent.element.style.border = '2px solid transparent';
+                    });
+                    this.resetConnectionHighlights();
+                }, 2000);
 
                 this.addLogEntry('success', `Workflow execution #${this.executionId} completed`, `All agents processed successfully`);
                 document.getElementById('executionStatus').textContent = 'Execution completed';
                 
                 this.isExecuting = false;
+            }
+
+            highlightConnections(agentId, className) {
+                const relatedConnections = this.connections.filter(conn => 
+                    conn.from === agentId || conn.to === agentId
+                );
+                
+                relatedConnections.forEach(conn => {
+                    const pathElement = document.getElementById(conn.id);
+                    if (pathElement) {
+                        pathElement.classList.add(className);
+                    }
+                });
+            }
+
+            resetConnectionHighlights() {
+                const paths = document.querySelectorAll('.connection-line');
+                paths.forEach(path => {
+                    path.classList.remove('active', 'error');
+                });
             }
 
             getRandomError() {
@@ -878,7 +1695,9 @@
                     'Memory allocation failed',
                     'API rate limit exceeded',
                     'Authentication failed',
-                    'Resource not found'
+                    'Resource not found',
+                    'Processing timeout',
+                    'Invalid configuration'
                 ];
                 return errors[Math.floor(Math.random() * errors.length)];
             }
@@ -917,15 +1736,23 @@
                     return;
                 }
 
+                // Remove all connections
+                this.connections.forEach(conn => {
+                    const pathElement = document.getElementById(conn.id);
+                    if (pathElement) pathElement.remove();
+                });
+                this.connections = [];
+
                 // Remove all canvas agents
                 this.canvasAgents.forEach(agent => {
                     agent.element.remove();
                 });
                 
                 this.canvasAgents = [];
+                this.selectedAgent = null;
                 this.updatePlaceholderVisibility();
                 
-                this.addLogEntry('success', 'Canvas cleared', 'All agents removed from workflow');
+                this.addLogEntry('success', 'Canvas cleared', 'All agents and connections removed from workflow');
                 document.getElementById('executionStatus').textContent = 'Ready to execute';
             }
 
@@ -938,18 +1765,84 @@
                         type: agent.type,
                         title: agent.title,
                         description: agent.description,
-                        position: {
-                            x: parseInt(agent.element.style.left),
-                            y: parseInt(agent.element.style.top)
-                        }
+                        position: agent.position,
+                        properties: agent.properties
                     })),
+                    connections: this.connections,
                     created: new Date().toISOString()
                 };
                 
                 // Save to localStorage (in a real app, this would be sent to a server)
-                localStorage.setItem('aiWorkflow', JSON.stringify(workflowData));
+                const savedWorkflows = JSON.parse(localStorage.getItem('aiWorkflows') || '[]');
+                savedWorkflows.push(workflowData);
+                localStorage.setItem('aiWorkflows', JSON.stringify(savedWorkflows));
                 
-                this.addLogEntry('success', 'Workflow saved', `Saved ${this.canvasAgents.length} agents to local storage`);
+                this.addLogEntry('success', 'Workflow saved', `Saved ${this.canvasAgents.length} agents and ${this.connections.length} connections`);
+            }
+
+            loadWorkflow() {
+                const savedWorkflows = JSON.parse(localStorage.getItem('aiWorkflows') || '[]');
+                
+                if (savedWorkflows.length === 0) {
+                    this.addLogEntry('warning', 'No saved workflows', 'Save a workflow first');
+                    return;
+                }
+
+                // For demo, load the most recent workflow
+                const latestWorkflow = savedWorkflows[savedWorkflows.length - 1];
+                
+                // Clear current workflow
+                this.clearCanvas();
+                
+                // Restore agents
+                latestWorkflow.agents.forEach(agentData => {
+                    const agentElement = document.createElement('div');
+                    agentElement.className = 'canvas-agent';
+                    agentElement.id = agentData.id;
+                    agentElement.style.left = `${agentData.position.x}px`;
+                    agentElement.style.top = `${agentData.position.y}px`;
+                    agentElement.style.zIndex = '2';
+                    
+                    agentElement.innerHTML = `
+                        <div class="connection-point input" data-agent-id="${agentData.id}" data-type="input"></div>
+                        <div class="canvas-agent-title">${agentData.title}</div>
+                        <div class="canvas-agent-description">${agentData.description}</div>
+                        <div class="connection-point output" data-agent-id="${agentData.id}" data-type="output"></div>
+                    `;
+
+                    this.setupConnectionPoints(agentElement, agentData.id);
+                    this.makeCanvasAgentDraggable(agentElement);
+                    this.makeCanvasAgentSelectable(agentElement, agentData.id);
+                    
+                    document.getElementById('canvasArea').appendChild(agentElement);
+                    
+                    this.canvasAgents.push({
+                        id: agentData.id,
+                        type: agentData.type,
+                        title: agentData.title,
+                        description: agentData.description,
+                        element: agentElement,
+                        position: agentData.position,
+                        properties: agentData.properties || {}
+                    });
+                });
+
+                // Restore connections
+                this.connections = latestWorkflow.connections || [];
+                this.connections.forEach(connection => {
+                    this.renderConnection(connection);
+                });
+
+                this.updatePlaceholderVisibility();
+                this.addLogEntry('success', 'Workflow loaded', `Loaded ${latestWorkflow.agents.length} agents and ${latestWorkflow.connections.length} connections`);
+            }
+
+            showHelp() {
+                document.getElementById('helpModal').classList.add('show');
+            }
+
+            hideHelp() {
+                document.getElementById('helpModal').classList.remove('show');
             }
 
             delay(ms) {
