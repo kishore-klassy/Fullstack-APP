@@ -1,0 +1,28 @@
+
+/* Styling for the Dashboard elements */
+
+.dashboard-root {
+  padding: 20px;
+  background-color: #f0f2f5;
+  min-height: 100vh;
+}
+
+.dashboard-widget {
+  padding: 15px;
+  margin: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+/* Additional responsiveness rules */
+@media (max-width: 768px) {
+  .dashboard-root {
+    padding: 15px;
+  }
+
+  .dashboard-widget {
+    margin: 5px;
+    padding: 10px;
+  }
+}
